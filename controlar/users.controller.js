@@ -56,3 +56,18 @@ module.exports.updateUser = async (req, res, next) => {
     }
 }
 
+
+// Upload Profile Image
+module.exports.uploadProfileImg = async (req, res, next) => {
+    try {
+        console.log(req.file);
+        const key = req.file.key;
+        const imgUrl = req.file.location;
+        const imgInfo = {key, imgUrl}
+        res.json({ status: 200, message: 'Image uploaded successfully', data: imgInfo });
+
+    } catch (error) {
+        next(error)
+    }
+}
+

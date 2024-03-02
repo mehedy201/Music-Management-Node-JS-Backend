@@ -3,6 +3,20 @@ const cors = require('cors');
 require('dotenv').config();
 const app = express();
 const port = process.env.PORT || 5000;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // DB Import ______________
 const dbConnection = require('./utilities/dbConnect');
 // USERS Routs_____________
@@ -19,6 +33,17 @@ dbConnection.connectToServer();
 
 // USERS API________________________/////
 app.use('/api/v1/users', userRoute)
+
+
+
+
+
+
+
+
+
+
+
 
 
 

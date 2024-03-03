@@ -10,9 +10,9 @@ const app = express();
 
 // Configure AWS SDK
 const s3 = new aws.S3({
-    accessKeyId: 'AKIA43B5S6ET2TK2Q4QA',
-    secretAccessKey: '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',
-    region: 'ap-south-1'
+    accessKeyId: process.env.ACCESS_KEY,
+    secretAccessKey: process.env.SECRET_ACCESS_KEY,
+    region: process.env.REGION
   });
 
 
@@ -20,7 +20,7 @@ const s3 = new aws.S3({
 module.exports.uploadUserProfileImage = multer({
     storage: multerS3({
       s3: s3,
-      bucket: 'dream-records-2024',
+      bucket: process.env.BUCKET,
       contentType: multerS3.AUTO_CONTENT_TYPE,
       acl: 'public-read',
       metadata: function (req, file, cb) {

@@ -1,11 +1,13 @@
 const { ObjectId } = require("mongodb");
 const { getDb } = require("../utilities/dbConnect");
 
-// Get All User Data_____________________________________________________
-module.exports.userArtistList = (req, res, next) => {
+// Get All Artist in Master User_________________________________________
+module.exports.userArtistList = async (req, res, next) => {
     try {
-        console.log('Hit');
-        res.send({status: 200, message: 'Successfully artist Connected'});
+        const db = getDb();
+        const masterUserId = req.params.masterUserId;
+        const result = await db.collection('artist').find({ masterUserId: masterUserId }).toArray();
+        res.send({status: 200, message: 'Successfully Get artist List', data: result});
     } catch (error) {
         next(error)
     }

@@ -17,7 +17,21 @@ module.exports.userCreateNewArtist = async (req, res, next) => {
         const db = getDb();
         const user = req.body;
         const result = await db.collection('artist').insertOne(user);
-        res.send({status: 200, message: 'Successfully Create a Artist', email: userEmail, data: result});
+        res.send({status: 200, message: 'Successfully Create a Artist', data: result});
+    } catch (error) {
+        next(error)
+    }
+}
+
+// Upload Profile Image
+module.exports.uploadArtistImg = async (req, res, next) => {
+    try {
+        console.log(req.file);
+        const key = req.file.key;
+        const imgUrl = req.file.location;
+        const imgInfo = {key, imgUrl}
+        res.json({ status: 200, message: 'Image uploaded successfully', data: imgInfo });
+
     } catch (error) {
         next(error)
     }

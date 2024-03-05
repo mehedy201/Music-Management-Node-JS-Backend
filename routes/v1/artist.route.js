@@ -5,6 +5,8 @@ const router = express.Router();
 
 // Get All Artist in Specific Muster Usere____________________________________
 router.get('/:masterUserId', artistController.userArtistList);
+// Get All Artist Data Using Search from Client Side__________________________
+router.get('/search/:masterUserId', artistController.userArtistListBySearch);
 // Crate Artist inside Specific Muster Usere______________________________________
 router.post('/upload-artist-img', uploadArtistImage.single('file'), artistController.uploadArtistImg);
 // Crate Artist in Specific Muster Usere______________________________________

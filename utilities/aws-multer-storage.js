@@ -54,6 +54,10 @@ module.exports.uploadArtistImage = multer({
     }),
 });
 
+module.exports.deleteArtistImage = async (i) => {
+  await s3.deleteObject({ Bucket: process.env.BUCKET, Key: i }).promise();
+}
+
 
 // Label Image Upload___________________________________________________________
 module.exports.uploadLabelImage = multer({

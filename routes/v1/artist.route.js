@@ -12,4 +12,7 @@ router.post('/upload-artist-img', uploadArtistImage.single('file'), artistContro
 // Crate Artist in Specific Muster Usere______________________________________
 router.post('/create-artist', artistController.userCreateNewArtist);
 
+// Delete Artist Data and Artist Image_______________________________________
+router.delete('/delete-artist/:id', artistController.deleteArtistDataAndImage);
+
 module.exports = router;

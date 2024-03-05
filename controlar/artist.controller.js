@@ -1,13 +1,22 @@
 const { ObjectId } = require("mongodb");
 const { getDb } = require("../utilities/dbConnect");
 
-// Get All Artist in Master User_________________________________________
+// All artist data under the Master User_________________________________
 module.exports.userArtistList = async (req, res, next) => {
     try {
         const db = getDb();
+        // Fint Artist under Master User ______
         const masterUserId = req.params.masterUserId;
-        const result = await db.collection('artist').find({ masterUserId: masterUserId }).toArray();
-        res.send({status: 200, message: 'Successfully Get artist List', data: result});
+        const find = await db.collection('artist').find({ masterUserId: masterUserId }).toArray();
+        const organizeData = find.reverse();
+        const dataCount = organizeData.length;
+        // Pagination __________________________
+        const page = parseInt(req.query.page);
+        const limit = parseInt(req.query.limit);
+        const startIndex = (page - 1) * limit;
+        const endIndex = page * limit;
+        const data = organizeData.slice(startIndex, endIndex);
+        res.send({status: 200, message: 'Successfully Get artist List', data: data, dataCount: dataCount});
     } catch (error) {
         next(error)
     }

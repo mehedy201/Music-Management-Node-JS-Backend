@@ -8,7 +8,8 @@ module.exports.getAllUsers = async (req, res, next) => {
         const db = getDb();
         const cursor = await db.collection('users').find(query);
         const users = await cursor.toArray();
-        res.send({status: 200, message: 'Successfully Get All USERS', data: users});
+        const organizeData = users.reverse();
+        res.send({status: 200, message: 'Successfully Get All USERS', data: organizeData});
     } catch (error) {
         next(error)
     }

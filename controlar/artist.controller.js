@@ -53,7 +53,7 @@ module.exports.userCreateNewArtist = async (req, res, next) => {
     }
 }
 
-// Upload Profile Image___________________________________________________
+// Upload Artist Image___________________________________________________
 module.exports.uploadArtistImg = async (req, res, next) => {
     try {
         const key = req.file.key;

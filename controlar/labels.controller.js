@@ -1,6 +1,19 @@
 const { ObjectId } = require("mongodb");
 const { getDb } = require("../utilities/dbConnect");
+const { deleteAwsStorageFile } = require("../utilities/aws-multer-storage");
 
+
+// Create a New Labels___________________________________________________
+module.exports.userCreateNewLabels = async (req, res, next) => {
+    try {
+        const db = getDb();
+        const labels = req.body;
+        const result = await db.collection('labels').insertOne(labels);
+        res.send({status: 200, message: 'Successfully Create a labels', data: result});
+    } catch (error) {
+        next(error)
+    }
+}
 
 // All Labels data under the Master User_________________________________
 module.exports.userLabelsList = async (req, res, next) => {
@@ -47,18 +60,22 @@ module.exports.userLabelsSearch = async (req, res, next) => {
     }
 }
 
-// Create a New Labels___________________________________________________
-module.exports.userCreateNewLabels = async (req, res, next) => {
+// Delete Artist Data and Image_____________________________________________
+module.exports.deleteLabelsDataAndImage = async (req, res, next) => {
     try {
+        // Delete Artist Img from AWS S3 ________________
+        const imgKey = req.query.imgKey
+        const deleteImg = await deleteAwsStorageFile(imgKey);
+        //Delete Artist Data from MongoDB________________
         const db = getDb();
-        const labels = req.body;
-        const result = await db.collection('labels').insertOne(labels);
-        res.send({status: 200, message: 'Successfully Create a labels', data: result});
+        const id = req.params.id;
+        const query = {_id: new ObjectId(id) };
+        const singleData = await db.collection('labels').deleteOne(query);
+        res.json({ status: 200, message: 'Deleted labels'});
     } catch (error) {
         next(error)
     }
 }
-
 
 // Upload Labels Image___________________________________________________
 module.exports.uploadLabelsImg = async (req, res, next) => {

@@ -16,6 +16,6 @@ router.post('/upload-labels-img', uploadLabelImage.single('file'), labelsControl
 router.post('/create-labels', labelsController.userCreateNewLabels);
 
 // Delete Artist Data and Labels Image_______________________________________
-// router.delete('/delete-artist/:id', artistController.deleteArtistDataAndImage);
+router.delete('/delete-labels/:id', labelsController.deleteLabelsDataAndImage);
 
 module.exports = router;

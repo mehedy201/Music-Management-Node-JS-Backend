@@ -35,6 +35,26 @@ module.exports.uploadUserProfileImage = multer({
 
 
 // Artist Image Upload___________________________________________________________
+module.exports.uploadReleaseImage = multer({
+    storage: multerS3({
+      s3: s3,
+      bucket: process.env.BUCKET,
+      contentType: multerS3.AUTO_CONTENT_TYPE,
+      acl: 'public-read',
+      metadata: function (req, file, cb) {
+        cb(null, { fieldName: file.fieldname });
+      },
+      key: function (req, file, cb) {
+        const folderName = 'release-image';
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+        const fileName = uniqueSuffix + '-' + file.originalname;
+        const fullPath = folderName + '/' + fileName;
+        cb(null, fullPath);
+      },
+    }),
+});
+
+// Artist Image Upload___________________________________________________________
 module.exports.uploadArtistImage = multer({
     storage: multerS3({
       s3: s3,

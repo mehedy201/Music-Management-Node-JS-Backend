@@ -8,6 +8,7 @@ const port = process.env.PORT || 5000;
 const dbConnection = require('./utilities/dbConnect');
 // All Routes__________________________________________________________
 const userRoutes = require('./routes/v1/users.route');
+const releaseRoutes = require('./routes/v1/release.route')
 const artistRoutes = require('./routes/v1/artist.route');
 const labelsRoutes = require('./routes/v1/labels.route')
 
@@ -23,6 +24,7 @@ dbConnection.connectToServer();
 
 // USERS API________________________/////
 app.use('/api/v1/users', userRoutes);
+app.use('/api/v1/release', releaseRoutes);
 app.use('/api/v1/artist', artistRoutes);
 app.use('/api/v1/labels', labelsRoutes);
 

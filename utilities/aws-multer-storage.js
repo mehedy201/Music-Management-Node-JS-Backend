@@ -54,7 +54,7 @@ module.exports.uploadArtistImage = multer({
     }),
 });
 
-module.exports.deleteArtistImage = async (i) => {
+module.exports.deleteAwsStorageFile = async (i) => {
   await s3.deleteObject({ Bucket: process.env.BUCKET, Key: i }).promise();
 }
 

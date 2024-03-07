@@ -25,6 +25,27 @@ module.exports.userLabelsList = async (req, res, next) => {
         next(error)
     }
 }
+// Search Labels data under the Master User_________________________________
+module.exports.userLabelsSearch = async (req, res, next) => {
+    try {
+        const db = getDb();
+        // Find Labels under Master User ______
+        const masterUserId = req.params.masterUserId;
+        const findLablesByMasterId = await db.collection('labels').find({ masterUserId: masterUserId }).toArray();
+        // Filter Labels data by Status _______
+        const status = req.query.status;
+        const findByStatus = findLablesByMasterId.filter(d =>d.status.toLowerCase().includes(status.toLowerCase()));
+        // Filter Labels by labelsName_________
+        const searchText = req.query.search;
+        const findByName = findByStatus.filter(d =>d.labelName.toLowerCase().includes(searchText.toLowerCase()))
+        const data = findByName.reverse();
+        const dataCount = data.length;
+
+        res.send({status: 200, message: 'Successfully Get labels List by Search', data: data, dataCount: dataCount});
+    } catch (error) {
+        next(error)
+    }
+}
 
 // Create a New Labels___________________________________________________
 module.exports.userCreateNewLabels = async (req, res, next) => {

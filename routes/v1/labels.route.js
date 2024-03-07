@@ -7,7 +7,7 @@ const router = express.Router();
 router.get('/:masterUserId', labelsController.userLabelsList);
 
 // Get All Labels Data Using Search from Client Side__________________________
-// router.get('/search/:masterUserId', Labels Controller.userLabels ListBySearch);
+router.get('/search/:masterUserId', labelsController.userLabelsSearch);
 
 // Crate Artist inside Specific Muster Usere______________________________________
 router.post('/upload-labels-img', uploadLabelImage.single('file'), labelsController.uploadLabelsImg);
@@ -15,7 +15,7 @@ router.post('/upload-labels-img', uploadLabelImage.single('file'), labelsControl
 // Crate Artist in Specific Muster Usere______________________________________
 router.post('/create-labels', labelsController.userCreateNewLabels);
 
-// Delete Artist Data and Artist Image_______________________________________
+// Delete Artist Data and Labels Image_______________________________________
 // router.delete('/delete-artist/:id', artistController.deleteArtistDataAndImage);
 
 module.exports = router;

@@ -1,6 +1,6 @@
 const { ObjectId } = require("mongodb");
 const { getDb } = require("../utilities/dbConnect");
-const { deleteArtistImage } = require("../utilities/aws-multer-storage");
+const { deleteAwsStorageFile } = require("../utilities/aws-multer-storage");
 
 // All Labels data under the Master User_________________________________
 module.exports.userArtistList = async (req, res, next) => {
@@ -70,7 +70,7 @@ module.exports.deleteArtistDataAndImage = async (req, res, next) => {
     try {
         // Delete Artist Img from AWS S3 ________________
         const imgKey = req.query.imgKey
-        const deleteImg = await deleteArtistImage(imgKey);
+        const deleteImg = await deleteAwsStorageFile(imgKey);
         //Delete Artist Data from MongoDB________________
         const db = getDb();
         const id = req.params.id;

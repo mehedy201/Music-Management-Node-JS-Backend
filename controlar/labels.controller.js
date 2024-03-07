@@ -60,6 +60,24 @@ module.exports.userLabelsSearch = async (req, res, next) => {
     }
 }
 
+// Search artist data under the Master User_________________________________
+module.exports.userLabelsListForCreateRelease = async (req, res, next) => {
+    try {
+        const db = getDb();
+        // Fint Artist under Master User ___________
+        const masterUserId = req.params.masterUserId;
+        const status = "Approved"
+        const data = await db.collection('labels').find({ masterUserId: masterUserId }).toArray();
+        const find = data.filter(d => d.status.toLowerCase().includes(status.toLowerCase()))
+        const organizeData = find.reverse();
+        const dataCount = organizeData.length;
+        res.send({status: 200, message: 'Successfully Get artist List', data: organizeData, dataCount: dataCount});
+    } catch (error) {
+        next(error)
+    }
+}
+
+
 // Delete Artist Data and Image_____________________________________________
 module.exports.deleteLabelsDataAndImage = async (req, res, next) => {
     try {

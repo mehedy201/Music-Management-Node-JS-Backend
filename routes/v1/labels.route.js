@@ -9,6 +9,9 @@ router.get('/:masterUserId', labelsController.userLabelsList);
 // Get All Labels Data Using Search from Client Side__________________________
 router.get('/search/:masterUserId', labelsController.userLabelsSearch);
 
+// Get All Approved Label for Create release _________________________________
+router.get('/for-release/:masterUserId', labelsController.userLabelsListForCreateRelease);
+
 // Crate Artist inside Specific Muster Usere______________________________________
 router.post('/upload-labels-img', uploadLabelImage.single('file'), labelsController.uploadLabelsImg);
 

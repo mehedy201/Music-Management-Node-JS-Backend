@@ -2,7 +2,7 @@ const { ObjectId } = require("mongodb");
 const { getDb } = require("../utilities/dbConnect");
 const { deleteAwsStorageFile } = require("../utilities/aws-multer-storage");
 
-// All Labels data under the Master User_________________________________
+// All Artist data under the Master User_________________________________
 module.exports.userArtistList = async (req, res, next) => {
     try {
         const db = getDb();
@@ -36,6 +36,21 @@ module.exports.userArtistListBySearch = async (req, res, next) => {
         const searchData = organizeData.filter(d =>d.artistName.toLowerCase().includes(searchText.toLowerCase()));
         const dataCount = searchData.length;
         res.send({status: 200, message: 'Successfully Get artist List', data: searchData, dataCount: dataCount});
+    } catch (error) {
+        next(error)
+    }
+}
+
+// Search artist data under the Master User_________________________________
+module.exports.userArtistListForCreateRelease = async (req, res, next) => {
+    try {
+        const db = getDb();
+        // Fint Artist under Master User ___________
+        const masterUserId = req.params.masterUserId;
+        const find = await db.collection('artist').find({ masterUserId: masterUserId }).toArray();
+        const organizeData = find.reverse();
+        const dataCount = organizeData.length;
+        res.send({status: 200, message: 'Successfully Get artist List', data: organizeData, dataCount: dataCount});
     } catch (error) {
         next(error)
     }

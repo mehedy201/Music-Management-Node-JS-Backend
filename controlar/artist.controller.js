@@ -2,7 +2,7 @@ const { ObjectId } = require("mongodb");
 const { getDb } = require("../utilities/dbConnect");
 const { deleteArtistImage } = require("../utilities/aws-multer-storage");
 
-// All artist data under the Master User_________________________________
+// All Labels data under the Master User_________________________________
 module.exports.userArtistList = async (req, res, next) => {
     try {
         const db = getDb();
@@ -23,7 +23,7 @@ module.exports.userArtistList = async (req, res, next) => {
     }
 }
 
-// All artist data under the Master User_________________________________
+// Search artist data under the Master User_________________________________
 module.exports.userArtistListBySearch = async (req, res, next) => {
     try {
         const db = getDb();
@@ -45,8 +45,8 @@ module.exports.userArtistListBySearch = async (req, res, next) => {
 module.exports.userCreateNewArtist = async (req, res, next) => {
     try {
         const db = getDb();
-        const user = req.body;
-        const result = await db.collection('artist').insertOne(user);
+        const artist = req.body;
+        const result = await db.collection('artist').insertOne(artist);
         res.send({status: 200, message: 'Successfully Create a Artist', data: result});
     } catch (error) {
         next(error)

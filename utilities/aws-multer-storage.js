@@ -34,7 +34,7 @@ module.exports.uploadUserProfileImage = multer({
 });
 
 
-// Artist Image Upload___________________________________________________________
+// Release Image Upload___________________________________________________________
 module.exports.uploadReleaseImage = multer({
     storage: multerS3({
       s3: s3,
@@ -46,6 +46,25 @@ module.exports.uploadReleaseImage = multer({
       },
       key: function (req, file, cb) {
         const folderName = 'release-image';
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+        const fileName = uniqueSuffix + '-' + file.originalname;
+        const fullPath = folderName + '/' + fileName;
+        cb(null, fullPath);
+      },
+    }),
+});
+// Release Audio Upload___________________________________________________________
+module.exports.uploadReleaseAudio = multer({
+    storage: multerS3({
+      s3: s3,
+      bucket: process.env.BUCKET,
+      contentType: multerS3.AUTO_CONTENT_TYPE,
+      acl: 'public-read',
+      metadata: function (req, file, cb) {
+        cb(null, { fieldName: file.fieldname });
+      },
+      key: function (req, file, cb) {
+        const folderName = 'release-audio';
         const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
         const fileName = uniqueSuffix + '-' + file.originalname;
         const fullPath = folderName + '/' + fileName;
@@ -74,10 +93,6 @@ module.exports.uploadArtistImage = multer({
     }),
 });
 
-module.exports.deleteAwsStorageFile = async (i) => {
-  await s3.deleteObject({ Bucket: process.env.BUCKET, Key: i }).promise();
-}
-
 
 // Label Image Upload___________________________________________________________
 module.exports.uploadLabelImage = multer({
@@ -98,3 +113,9 @@ module.exports.uploadLabelImage = multer({
       },
     }),
 });
+
+
+// Delete File form AWS___________________________________________________________
+module.exports.deleteAwsStorageFile = async (i) => {
+  await s3.deleteObject({ Bucket: process.env.BUCKET, Key: i }).promise();
+}

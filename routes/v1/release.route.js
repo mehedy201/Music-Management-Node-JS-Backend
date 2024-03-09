@@ -8,6 +8,10 @@ const router = express.Router();
 router.post('/upload-release-img', uploadReleaseImage.single('file'), releaseController.uploadReleaseImg);
 // Release Audio Upload API
 router.post('/upload-release-audio', uploadReleaseAudio.single('file'), releaseController.uploadReleaseAudio);
+// Release Data Store in mongoDB API
+router.post('/create-release', releaseController.userCreateNewRelease);
+// Delete Release Audio______
+router.delete('/delete-release-audio', releaseController.deleteReleaseAudio);
 
 
 

@@ -13,13 +13,13 @@ module.exports.uploadReleaseImg = async (req, res, next) => {
         next(error)
     }
 }
-// Upload Release Image___________________________________________________
+// Upload Release Audio___________________________________________________
 module.exports.uploadReleaseAudio = async (req, res, next) => {
     try {
-        const key = req.file.key;
+        const audioKey = req.file.key;
         const audioName = req.file.originalname;
         const audioUrl = req.file.location;
-        const audioInfo = {key, audioName, audioUrl}
+        const audioInfo = {audioKey, audioName, audioUrl}
         res.json({ status: 200, message: 'Audio uploaded successfully', data: audioInfo });
     } catch (error) {
         next(error)
@@ -33,6 +33,31 @@ module.exports.userCreateNewRelease = async (req, res, next) => {
         const release = req.body;
         const result = await db.collection('release').insertOne(release);
         res.send({status: 200, message: 'Successfully Create Release', data: result});
+    } catch (error) {
+        next(error)
+    }
+}
+
+
+// Get Release data under the Master User By Status_________________________________
+module.exports.userReleasesList = async (req, res, next) => {
+    try {
+        const db = getDb();
+        // Find Release under Master User ______
+        const masterUserId = req.params.masterUserId;
+        const findReleaseByMasterId = await db.collection('release').find({ masterUserId: masterUserId }).toArray();
+        // Filter Release data by Status _______
+        const status = req.query.status;
+        const findByStatus = findReleaseByMasterId.filter(d =>d.status.toLowerCase().includes(status.toLowerCase()));
+        const organizeData = findByStatus.reverse();
+        const dataCount = organizeData.length;
+        // Pagination __________________________
+        const page = parseInt(req.query.page);
+        const limit = parseInt(req.query.limit);
+        const startIndex = (page - 1) * limit;
+        const endIndex = page * limit;
+        const data = organizeData.slice(startIndex, endIndex);
+        res.send({status: 200, message: 'Successfully Get Release List', data: data, dataCount: dataCount});
     } catch (error) {
         next(error)
     }

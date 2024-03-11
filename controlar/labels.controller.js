@@ -15,7 +15,7 @@ module.exports.userCreateNewLabels = async (req, res, next) => {
     }
 }
 
-// All Labels data under the Master User_________________________________
+// Get Labels data under the Master User by Status_________________________________
 module.exports.userLabelsList = async (req, res, next) => {
     try {
         const db = getDb();

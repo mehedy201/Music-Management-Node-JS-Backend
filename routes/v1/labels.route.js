@@ -3,7 +3,7 @@ const labelsController = require('../../controlar/labels.controller')
 const { uploadLabelImage } = require('../../utilities/aws-multer-storage');
 const router = express.Router();
 
-// Get All Labels in Specific Muster Usere____________________________________
+// Get Labels in Specific Muster Usere by Status____________________________________
 router.get('/:masterUserId', labelsController.userLabelsList);
 
 // Get All Labels Data Using Search from Client Side__________________________

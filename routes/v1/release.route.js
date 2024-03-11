@@ -12,6 +12,8 @@ router.post('/upload-release-audio', uploadReleaseAudio.single('file'), releaseC
 router.post('/create-release', releaseController.userCreateNewRelease);
 // Delete Release Audio______
 router.delete('/delete-release-audio', releaseController.deleteReleaseAudio);
+// Get Release data in Specific Muster User by status____________________________________
+router.get('/:masterUserId', releaseController.userReleasesList);
 
 
 

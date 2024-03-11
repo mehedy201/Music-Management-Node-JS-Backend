@@ -63,6 +63,27 @@ module.exports.userReleasesList = async (req, res, next) => {
     }
 }
 
+// Release Search _____________________________________________________________________________________
+module.exports.userReleaseSearch = async (req, res, next) => {
+    try {
+        const db = getDb();
+        // Find Release under Master User ______
+        const masterUserId = req.params.masterUserId;
+        const findReleaseByMasterId = await db.collection('release').find({ masterUserId: masterUserId }).toArray();
+        // Filter Release data by Status _______
+        const status = req.query.status;
+        const findByStatus = findReleaseByMasterId.filter(d =>d.status.toLowerCase().includes(status.toLowerCase()));
+        // Filter Release by Release Title_________
+        const searchText = req.query.search;
+        const findByTitle = findByStatus.filter(d =>d.releaseTitle.toLowerCase().includes(searchText.toLowerCase()))
+        const data = findByTitle.reverse();
+        const dataCount = data.length;
+
+        res.send({status: 200, message: 'Successfully Get Release List by Search', data: data, dataCount: dataCount});
+    } catch (error) {
+        next(error)
+    }
+}
 
 
 

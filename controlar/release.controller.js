@@ -85,6 +85,17 @@ module.exports.userReleaseSearch = async (req, res, next) => {
     }
 }
 
+// Single Release Data _____________________________________________________________________________________
+module.exports.singleReleaseData = async (req, res, next) => {
+    try {
+        const db = getDb();
+        const id = req.params.id;
+        const findSingleRelease = await db.collection('release').find({_id: new ObjectId(id) }).toArray();
+        res.send({status: 200, message: 'Successfully Get single Release Data', data: findSingleRelease});
+    } catch (error) {
+        next(error)
+    }
+}
 
 
 

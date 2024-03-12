@@ -17,6 +17,9 @@ router.get('/:masterUserId', releaseController.userReleasesList);
 // Get All Release Data Using Search from Client Side__________________________
 router.get('/search/:masterUserId', releaseController.userReleaseSearch);
 
+// Get Single Release Data __________________________
+router.get('/single/:id', releaseController.singleReleaseData);
+
 
 
 module.exports = router;

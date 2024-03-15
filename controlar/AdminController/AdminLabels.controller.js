@@ -1,3 +1,4 @@
+const { ObjectId } = require("mongodb");
 const { getDb } = require("../../utilities/dbConnect");
 
 
@@ -19,6 +20,18 @@ module.exports.usersLabelsList = async (req, res, next) => {
         const endIndex = page * limit;
         const data = organizeData.slice(startIndex, endIndex);
         res.send({status: 200, message: 'Successfully Get labels List', data: data, dataCount: dataCount});
+    } catch (error) {
+        next(error)
+    }
+}
+
+// Get Single Labels data _________________________________
+module.exports.singleLabelForUpdateStatus = async (req, res, next) => {
+    try {
+        const db = getDb();
+        const id = req.params.id;
+        const findSingleLabels = await db.collection('labels').find({_id: new ObjectId(id) }).toArray();
+        res.send({status: 200, message: 'Successfully Get single labels Data', data: findSingleLabels});
     } catch (error) {
         next(error)
     }

@@ -19,7 +19,8 @@ dbConnection.connectToServer();
 // Admin Dashboard All Routes_________________________________________________________
 const adminLabelsRoutes = require('./routes/v1/AdminRoutes/AdminLabels.route');
 // admin settings page api routes ________
-const adminLanguageRoutes = require('./routes/v1/AdminRoutes/AdminLanguage.route');
+const adminSettingsLanguageRoutes = require('./routes/v1/AdminRoutes/AdminLanguage.route');
+const adminSettingsGenreRoutes = require('./routes/v1/AdminRoutes/AdminGenre.route');
 
 // User Dashboard All Routes__________________________________________________________
 const userRoutes = require('./routes/v1/users.route');
@@ -38,7 +39,8 @@ app.use('/api/v1/labels', labelsRoutes);
 app.use('/admin/api/v1/labels', adminLabelsRoutes);
 
 // admin settings page api ________________________
-app.use('/admin/api/v1/language', adminLanguageRoutes);
+app.use('/admin/api/v1/language', adminSettingsLanguageRoutes);
+app.use('/admin/api/v1/genre', adminSettingsGenreRoutes);
 
 
 

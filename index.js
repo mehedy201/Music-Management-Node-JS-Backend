@@ -18,6 +18,8 @@ dbConnection.connectToServer();
 
 // Admin Dashboard All Routes_________________________________________________________
 const adminLabelsRoutes = require('./routes/v1/AdminRoutes/AdminLabels.route');
+// admin settings page api routes ________
+const adminLanguageRoutes = require('./routes/v1/AdminRoutes/AdminLanguage.route');
 
 // User Dashboard All Routes__________________________________________________________
 const userRoutes = require('./routes/v1/users.route');
@@ -26,14 +28,17 @@ const artistRoutes = require('./routes/v1/artist.route');
 const labelsRoutes = require('./routes/v1/labels.route');
 
 
-// USERS API________________________/////
+// USERS API________________________________________________/////
 app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/release', releaseRoutes);
 app.use('/api/v1/artist', artistRoutes);
 app.use('/api/v1/labels', labelsRoutes);
 
-// ADMIN API________________________/////
+// ADMIN API________________________________________________/////
 app.use('/admin/api/v1/labels', adminLabelsRoutes);
+
+// admin settings page api ________________________
+app.use('/admin/api/v1/language', adminLanguageRoutes);
 
 
 

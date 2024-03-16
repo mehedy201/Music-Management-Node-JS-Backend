@@ -60,7 +60,7 @@ module.exports.userLabelsSearch = async (req, res, next) => {
     }
 }
 
-// Search artist data under the Master User_________________________________
+// Search Labels data under the Master User_________________________________
 module.exports.userLabelsListForCreateRelease = async (req, res, next) => {
     try {
         const db = getDb();
@@ -71,14 +71,14 @@ module.exports.userLabelsListForCreateRelease = async (req, res, next) => {
         const find = data.filter(d => d.status.toLowerCase().includes(status.toLowerCase()))
         const organizeData = find.reverse();
         const dataCount = organizeData.length;
-        res.send({status: 200, message: 'Successfully Get artist List', data: organizeData, dataCount: dataCount});
+        res.send({status: 200, message: 'Successfully Get Labels List', data: organizeData, dataCount: dataCount});
     } catch (error) {
         next(error)
     }
 }
 
 
-// Delete Artist Data and Image_____________________________________________
+// Delete Labels Data and Image_____________________________________________
 module.exports.deleteLabelsDataAndImage = async (req, res, next) => {
     try {
         // Delete Artist Img from AWS S3 ________________

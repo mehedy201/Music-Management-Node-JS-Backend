@@ -4,6 +4,8 @@ const adminGenreController = require('../../../controlar/AdminController/AdminGe
 
 
 router.post('/add-genre', adminGenreController.addGenre );
+router.get('/', adminGenreController.getAllGenre );
+router.delete('/:id', adminGenreController.deleteGenre );
 
 
 

@@ -4,6 +4,8 @@ const adminLanguageController = require('../../../controlar/AdminController/Admi
 
 
 router.post('/add-language', adminLanguageController.addLanguage);
+router.get('/', adminLanguageController.getAllLanguage);
+router.delete('/:id', adminLanguageController.deleteLanguage);
 
 
 

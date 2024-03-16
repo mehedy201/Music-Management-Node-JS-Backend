@@ -38,6 +38,22 @@ module.exports.userCreateNewRelease = async (req, res, next) => {
     }
 }
 
+// Update Release
+module.exports.updateRelease = async (req, res, next) => {
+    try {
+        const db = getDb();
+        const id = req.params.id;
+        const filter = { _id: new ObjectId(id)};
+        const option = {upsert: true};
+        const newObject = req.body;
+        const result = await db.collection('release').updateOne(filter, {$set: newObject}, option);
+        res.send({status: 200, message: 'Successfully Update Release Data', data: result});
+
+    } catch (error) {
+        next(error)
+    }
+}
+
 
 // Get Release data under the Master User By Status_________________________________
 module.exports.userReleasesList = async (req, res, next) => {

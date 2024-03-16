@@ -19,6 +19,8 @@ router.get('/search/:masterUserId', releaseController.userReleaseSearch);
 
 // Get Single Release Data __________________________
 router.get('/single/:id', releaseController.singleReleaseData);
+// Get Single Release Data __________________________
+router.put('/update-release/:id', releaseController.updateRelease);
 
 
 

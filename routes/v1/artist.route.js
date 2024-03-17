@@ -5,6 +5,8 @@ const router = express.Router();
 
 // Get All Artist in Specific Muster Usere____________________________________
 router.get('/:masterUserId', artistController.userArtistList);
+// Get Single Artist Data______________________________
+router.get('/single-artist/:id', artistController.singleArtistData);
 // Get All Artist in Specific Muster Usere____________________________________
 router.get('/for-release/:masterUserId', artistController.userArtistListForCreateRelease);
 // Get All Artist Data Using Search from Client Side__________________________

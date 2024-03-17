@@ -56,6 +56,18 @@ module.exports.userArtistListForCreateRelease = async (req, res, next) => {
     }
 }
 
+// Single Artist Data _____________________________________________________________________________________
+module.exports.singleArtistData = async (req, res, next) => {
+    try {
+        const db = getDb();
+        const id = req.params.id;
+        const findSingleArtist = await db.collection('artist').find({_id: new ObjectId(id) }).toArray();
+        res.send({status: 200, message: 'Successfully Get single Artist Data', data: findSingleArtist});
+    } catch (error) {
+        next(error)
+    }
+}
+
 // Create a New Artist___________________________________________________
 module.exports.userCreateNewArtist = async (req, res, next) => {
     try {

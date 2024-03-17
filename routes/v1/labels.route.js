@@ -6,6 +6,9 @@ const router = express.Router();
 // Get Labels in Specific Muster Usere by Status______________________________
 router.get('/:masterUserId', labelsController.userLabelsList);
 
+// Get Single Labels Data______________________________
+router.get('/single-labels/:id', labelsController.singleLabelsData);
+
 // Get All Labels Data Using Search from Client Side__________________________
 router.get('/search/:masterUserId', labelsController.userLabelsSearch);
 

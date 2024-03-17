@@ -72,6 +72,18 @@ module.exports.userLabelsSearch = async (req, res, next) => {
     }
 }
 
+// Single Labels Data _____________________________________________________________________________________
+module.exports.singleLabelsData = async (req, res, next) => {
+    try {
+        const db = getDb();
+        const id = req.params.id;
+        const findSingleLabels = await db.collection('labels').find({_id: new ObjectId(id) }).toArray();
+        res.send({status: 200, message: 'Successfully Get single Labels Data', data: findSingleLabels});
+    } catch (error) {
+        next(error)
+    }
+}
+
 // Search Labels data under the Master User_________________________________
 module.exports.userLabelsListForCreateRelease = async (req, res, next) => {
     try {

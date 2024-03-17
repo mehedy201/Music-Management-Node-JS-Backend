@@ -2,7 +2,7 @@ const { ObjectId } = require("mongodb");
 const { getDb } = require("../utilities/dbConnect");
 const { deleteAwsStorageFile } = require("../utilities/aws-multer-storage");
 
-// Upload Release Image___________________________________________________
+// Upload Release Image__________________________________________________________________________________________
 module.exports.uploadReleaseImg = async (req, res, next) => {
     try {
         const key = req.file.key;
@@ -13,7 +13,7 @@ module.exports.uploadReleaseImg = async (req, res, next) => {
         next(error)
     }
 }
-// Upload Release Audio___________________________________________________
+// Upload Release Audio___________________________________________________________________________________________
 module.exports.uploadReleaseAudio = async (req, res, next) => {
     try {
         const audioKey = req.file.key;
@@ -26,7 +26,7 @@ module.exports.uploadReleaseAudio = async (req, res, next) => {
     }
 }
 
-// Create a New Release___________________________________________________
+// Create a New Release__________________________________________________________________________________________
 module.exports.userCreateNewRelease = async (req, res, next) => {
     try {
         const db = getDb();
@@ -38,7 +38,7 @@ module.exports.userCreateNewRelease = async (req, res, next) => {
     }
 }
 
-// Update Release
+// Update Release_________________________________________________________________________________________________
 module.exports.updateRelease = async (req, res, next) => {
     try {
         const db = getDb();
@@ -54,8 +54,7 @@ module.exports.updateRelease = async (req, res, next) => {
     }
 }
 
-
-// Get Release data under the Master User By Status_________________________________
+// Get Release data under the Master User By Status________________________________________________________________
 module.exports.userReleasesList = async (req, res, next) => {
     try {
         const db = getDb();
@@ -79,7 +78,7 @@ module.exports.userReleasesList = async (req, res, next) => {
     }
 }
 
-// Release Search _____________________________________________________________________________________
+// Release Search ________________________________________________________________________________________________
 module.exports.userReleaseSearch = async (req, res, next) => {
     try {
         const db = getDb();
@@ -101,7 +100,7 @@ module.exports.userReleaseSearch = async (req, res, next) => {
     }
 }
 
-// Single Release Data _____________________________________________________________________________________
+// Single Release Data _______________________________________________________________________________________________
 module.exports.singleReleaseData = async (req, res, next) => {
     try {
         const db = getDb();
@@ -113,12 +112,138 @@ module.exports.singleReleaseData = async (req, res, next) => {
     }
 }
 
+// _____________________________________________________________________________________________________________________
+// Get Release data under the Artist By Status__________________________________________________________________________
+module.exports.artistReleasesList = async (req, res, next) => {
+    try {
+        const db = getDb();
+        const artistId = req.params.id;
+        const query ={};
+        // Find Release under Artist ___________
+        const allData = await db.collection('release').find(query).toArray();
+        const allArtistRelease = allData.filter(item => item.artist.some(artist => artist._id === artistId));
 
+        const status = req.query.status;
+        let organizeData;
+        if(status === 'All'){
+            organizeData = allArtistRelease.reverse();
+        }else{
+            const findByStatus = allArtistRelease.filter(d =>d.status.toLowerCase().includes(status.toLowerCase()));
+            organizeData = findByStatus.reverse();
+        }
+        // Pagination __________________________
+        const page = parseInt(req.query.page);
+        const limit = parseInt(req.query.limit);
+        const startIndex = (page - 1) * limit;
+        const endIndex = page * limit;
+        const data = organizeData.slice(startIndex, endIndex);
+        // Filter Release data Count _______
+        const dataCount = data.length;
+        const totalCount = allArtistRelease.length;
 
+        res.send({status: 200, message: 'Successfully Get Release List', data: data, dataCount: dataCount, totalCount: totalCount});
+    } catch (error) {
+        next(error)
+    }
+}
 
+// Release Search Under Artist_____________________________________________________________________________________
+module.exports.artistPageReleaseSearch = async (req, res, next) => {
+    try {
+        const db = getDb();
+        const query = {};
+        // Find Release under Master User ______
+        const artistId = req.params.id;
+        // Find Release under Artist ___________
+        const allData = await db.collection('release').find(query).toArray();
+        const allArtistRelease = allData.filter(item => item.artist.some(artist => artist._id === artistId));
+        // Filter release by release title______
+        const searchText = req.query.search;
+        const status = req.query.status;
+        let data;
+        if(status === 'All'){
+            const findByTitle = allArtistRelease.filter(d =>d.releaseTitle.toLowerCase().includes(searchText.toLowerCase()))
+            data = findByTitle.reverse();
+        }else{
+            const findByStatus = allArtistRelease.filter(d =>d.status.toLowerCase().includes(status.toLowerCase()));
+            const findByTitle = findByStatus.filter(d =>d.releaseTitle.toLowerCase().includes(searchText.toLowerCase()));
+            data = findByTitle.reverse();
+        }
+        const dataCount = data.length;
+        const totalCount = allArtistRelease.length
 
+        res.send({status: 200, message: 'Successfully Get Release List by Search in Artist Page', data: data, dataCount: dataCount, totalCount: totalCount});
+    } catch (error) {
+        next(error)
+    }
+}
+// _____________________________________________________________________________________________________________________
 
-// Delete Release Audio_____________________________________________
+// _____________________________________________________________________________________________________________________
+// Get Release data under the Labels By Status__________________________________________________________________________
+module.exports.labelsReleasesList = async (req, res, next) => {
+    try {
+        const db = getDb();
+        const lebelId = req.params.id;
+        const query ={};
+        // Find Release under Labels ___________
+        const allData = await db.collection('release').find(query).toArray();
+        const allLabelsRelease = allData.filter(item => item.labels.some(label => label._id === lebelId));
+        const status = req.query.status;
+        let organizeData;
+        if(status === 'All'){
+            organizeData = allLabelsRelease.reverse();
+        }else{
+            const findByStatus = allLabelsRelease.filter(d =>d.status.toLowerCase().includes(status.toLowerCase()));
+            organizeData = findByStatus.reverse();
+        }
+        // Pagination __________________________
+        const page = parseInt(req.query.page);
+        const limit = parseInt(req.query.limit);
+        const startIndex = (page - 1) * limit;
+        const endIndex = page * limit;
+        const data = organizeData.slice(startIndex, endIndex);
+        // Filter Release data Count _______
+        const dataCount = data.length;
+        const totalCount = allLabelsRelease.length;
+        res.send({status: 200, message: 'Successfully Get Labels Release List', data: data, dataCount: dataCount, totalCount: totalCount});
+    } catch (error) {
+        next(error)
+    }
+}
+
+// Release Search Under Labels_____________________________________________________________________________________
+module.exports.labelsPageReleaseSearch = async (req, res, next) => {
+    try {
+        const db = getDb();
+        const query = {};
+        const labelId = req.params.id;
+        // Find Release under Labels ___________
+        const allData = await db.collection('release').find(query).toArray();
+        const allLabelsRelease = allData.filter(item => item.labels.some(label => label._id === labelId));
+        // Filter Release by Release Title______
+        const searchText = req.query.search;
+        const status = req.query.status;
+        let data;
+        if(status === 'All'){
+            const findByTitle = allLabelsRelease.filter(d =>d.releaseTitle.toLowerCase().includes(searchText.toLowerCase()))
+            data = findByTitle.reverse();
+        }else{
+            const findByStatus = allLabelsRelease.filter(d =>d.status.toLowerCase().includes(status.toLowerCase()));
+            const findByTitle = findByStatus.filter(d =>d.releaseTitle.toLowerCase().includes(searchText.toLowerCase()));
+            data = findByTitle.reverse();
+        }
+        const dataCount = data.length;
+        const totalCount = allLabelsRelease.length
+
+        res.send({status: 200, message: 'Successfully Get Release List by Search in Labels Page', data: data, dataCount: dataCount, totalCount: totalCount});
+    } catch (error) {
+        next(error)
+    }
+}
+// _____________________________________________________________________________________________________________________
+
+// Delete Release Audio_________________________________________________________________________________________________
 module.exports.deleteReleaseAudio = async (req, res, next) => {
     try {
         // Delete Release Audio from AWS S3 ________________

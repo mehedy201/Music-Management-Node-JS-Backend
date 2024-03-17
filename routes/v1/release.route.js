@@ -4,25 +4,32 @@ const { uploadReleaseImage, uploadReleaseAudio } = require('../../utilities/aws-
 const router = express.Router();
 
 
-// Release Image Upload API______________________________________
+// Release Image Upload API_________________________________________________________
 router.post('/upload-release-img', uploadReleaseImage.single('file'), releaseController.uploadReleaseImg);
-// Release Audio Upload API
+// Release Audio Upload API_________________________________________________________
 router.post('/upload-release-audio', uploadReleaseAudio.single('file'), releaseController.uploadReleaseAudio);
-// Release Data Store in mongoDB API
+// Release Data Store in mongoDB API________________________________________________
 router.post('/create-release', releaseController.userCreateNewRelease);
-// Delete Release Audio______
+// Delete Release Audio_____________________________________________________________
 router.delete('/delete-release-audio', releaseController.deleteReleaseAudio);
-// Get Release data in Specific Muster User by status____________________________________
+// Get Release data in Specific Muster User by status_______________________________
 router.get('/:masterUserId', releaseController.userReleasesList);
-// Get All Release Data Using Search from Client Side__________________________
+// Get All Release Data Using Search from Client Side_______________________________
 router.get('/search/:masterUserId', releaseController.userReleaseSearch);
-
-// Get Single Release Data __________________________
+// _________________________________________________________________________________
+// Get Release data in Specific Artist by status____________________________________
+router.get('/artist/:id', releaseController.artistReleasesList);
+// Get All Release Data Using Search from Client Artist_____________________________
+router.get('/artist/search/:id', releaseController.artistPageReleaseSearch);
+// Get Release data in Specific Labels by status____________________________________
+router.get('/labels/:id', releaseController.labelsReleasesList);
+// Get All Release Data Using Search from Client Labels_____________________________
+router.get('/labels/search/:id', releaseController.labelsPageReleaseSearch);
+// _________________________________________________________________________________
+// Get Single Release Data _________________________________________________________
 router.get('/single/:id', releaseController.singleReleaseData);
-// Get Single Release Data __________________________
+// Get Single Release Data _________________________________________________________
 router.put('/update-release/:id', releaseController.updateRelease);
-
-
 
 module.exports = router;
 

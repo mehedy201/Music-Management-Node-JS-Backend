@@ -243,13 +243,13 @@ module.exports.labelsPageReleaseSearch = async (req, res, next) => {
 }
 // _____________________________________________________________________________________________________________________
 
-// Delete Release Audio_________________________________________________________________________________________________
-module.exports.deleteReleaseAudio = async (req, res, next) => {
+// Delete Release File__________________________________________________________________________________________________
+module.exports.deleteFile = async (req, res, next) => {
     try {
         // Delete Release Audio from AWS S3 ________________
-        const audioKey = req.query.audioKey
-        const deleteImg = await deleteAwsStorageFile(audioKey);
-        res.json({ status: 200, message: 'Deleted Release Audio'});
+        const key = req.query.key
+        const deleteImg = await deleteAwsStorageFile(key);
+        res.json({ status: 200, message: 'Successfully Deleted'});
     } catch (error) {
         next(error)
     }

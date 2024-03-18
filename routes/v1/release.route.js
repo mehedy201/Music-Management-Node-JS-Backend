@@ -11,7 +11,7 @@ router.post('/upload-release-audio', uploadReleaseAudio.single('file'), releaseC
 // Release Data Store in mongoDB API________________________________________________
 router.post('/create-release', releaseController.userCreateNewRelease);
 // Delete Release Audio_____________________________________________________________
-router.delete('/delete-release-audio', releaseController.deleteReleaseAudio);
+router.delete('/delete-file', releaseController.deleteFile);
 // Get Release data in Specific Muster User by status_______________________________
 router.get('/:masterUserId', releaseController.userReleasesList);
 // Get All Release Data Using Search from Client Side_______________________________

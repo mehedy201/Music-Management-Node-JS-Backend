@@ -64,13 +64,15 @@ module.exports.userReleasesList = async (req, res, next) => {
         // Filter Release data by Status _______
         const status = req.query.status;
         let organizeData;
+        let dataCount;
         if(status === 'All'){
             organizeData = findReleaseByMasterId.reverse();
+            dataCount = organizeData.length;
         }else{
             const findByStatus = findReleaseByMasterId.filter(d =>d.status.toLowerCase().includes(status.toLowerCase()));
             organizeData = findByStatus.reverse();
+            dataCount = organizeData.length;
         }
-        const dataCount = organizeData.length;
         // Pagination __________________________
         const page = parseInt(req.query.page);
         const limit = parseInt(req.query.limit);
@@ -130,11 +132,14 @@ module.exports.artistReleasesList = async (req, res, next) => {
 
         const status = req.query.status;
         let organizeData;
+        let dataCount;
         if(status === 'All'){
             organizeData = allArtistRelease.reverse();
+            dataCount = organizeData.length;
         }else{
             const findByStatus = allArtistRelease.filter(d =>d.status.toLowerCase().includes(status.toLowerCase()));
             organizeData = findByStatus.reverse();
+            dataCount = organizeData.length;
         }
         // Pagination __________________________
         const page = parseInt(req.query.page);
@@ -143,7 +148,6 @@ module.exports.artistReleasesList = async (req, res, next) => {
         const endIndex = page * limit;
         const data = organizeData.slice(startIndex, endIndex);
         // Filter Release data Count _______
-        const dataCount = data.length;
         const totalCount = allArtistRelease.length;
 
         res.send({status: 200, message: 'Successfully Get Release List', data: data, dataCount: dataCount, totalCount: totalCount});
@@ -196,11 +200,14 @@ module.exports.labelsReleasesList = async (req, res, next) => {
         const allLabelsRelease = allData.filter(item => item.labels.some(label => label._id === lebelId));
         const status = req.query.status;
         let organizeData;
+        let dataCount;
         if(status === 'All'){
             organizeData = allLabelsRelease.reverse();
+            dataCount = organizeData.length;
         }else{
             const findByStatus = allLabelsRelease.filter(d =>d.status.toLowerCase().includes(status.toLowerCase()));
             organizeData = findByStatus.reverse();
+            dataCount = organizeData.length;
         }
         // Pagination __________________________
         const page = parseInt(req.query.page);
@@ -209,7 +216,6 @@ module.exports.labelsReleasesList = async (req, res, next) => {
         const endIndex = page * limit;
         const data = organizeData.slice(startIndex, endIndex);
         // Filter Release data Count _______
-        const dataCount = data.length;
         const totalCount = allLabelsRelease.length;
         res.send({status: 200, message: 'Successfully Get Labels Release List', data: data, dataCount: dataCount, totalCount: totalCount});
     } catch (error) {

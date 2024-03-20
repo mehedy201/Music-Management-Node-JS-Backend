@@ -54,7 +54,6 @@ module.exports.userLabelsList = async (req, res, next) => {
             const findByStatus = findLablesByMasterId.filter(d =>d.status.toLowerCase().includes(status.toLowerCase()));
             organizeData = findByStatus.reverse();
         }
-
         const dataCount = organizeData.length;
         const data = organizeData.slice(startIndex, endIndex);
         res.send({status: 200, message: 'Successfully Get labels List', data: data, dataCount: dataCount});

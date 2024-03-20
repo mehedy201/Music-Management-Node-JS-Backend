@@ -20,6 +20,8 @@ router.post('/upload-labels-img', uploadLabelImage.single('file'), labelsControl
 
 // Crate Artist in Specific Muster Usere______________________________________
 router.post('/create-labels', labelsController.userCreateNewLabels);
+// UPDATE Label informations__________________________________________________
+router.put('/update-labels/:id', labelsController.updateLabels);
 
 // Delete Artist Data and Labels Image_______________________________________
 router.delete('/delete-labels/:id', labelsController.deleteLabelsDataAndImage);

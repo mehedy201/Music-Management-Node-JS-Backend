@@ -63,8 +63,13 @@ module.exports.userReleasesList = async (req, res, next) => {
         const findReleaseByMasterId = await db.collection('release').find({ masterUserId: masterUserId }).toArray();
         // Filter Release data by Status _______
         const status = req.query.status;
-        const findByStatus = findReleaseByMasterId.filter(d =>d.status.toLowerCase().includes(status.toLowerCase()));
-        const organizeData = findByStatus.reverse();
+        let organizeData;
+        if(status === 'All'){
+            organizeData = findReleaseByMasterId.reverse();
+        }else{
+            const findByStatus = findReleaseByMasterId.filter(d =>d.status.toLowerCase().includes(status.toLowerCase()));
+            organizeData = findByStatus.reverse();
+        }
         const dataCount = organizeData.length;
         // Pagination __________________________
         const page = parseInt(req.query.page);

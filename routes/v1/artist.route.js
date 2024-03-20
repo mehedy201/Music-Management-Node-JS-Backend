@@ -7,6 +7,8 @@ const router = express.Router();
 router.get('/:masterUserId', artistController.userArtistList);
 // Get Single Artist Data______________________________
 router.get('/single-artist/:id', artistController.singleArtistData);
+// Update Artist Data______________________________
+router.put('/update-artist/:id', artistController.updateArtist);
 // Get All Artist in Specific Muster Usere____________________________________
 router.get('/for-release/:masterUserId', artistController.userArtistListForCreateRelease);
 // Get All Artist Data Using Search from Client Side__________________________

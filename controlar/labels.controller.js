@@ -15,6 +15,23 @@ module.exports.userCreateNewLabels = async (req, res, next) => {
     }
 }
 
+// Update Labels Information_____________________________________________
+module.exports.updateLabels = async (req, res, next) => {
+    try {
+        const db = getDb();
+        const id = req.params.id;
+        const filter = { _id: new ObjectId(id)};
+        const option = {upsert: true};
+        const newObject = req.body;
+        delete newObject._id;
+        const result = await db.collection('labels').updateOne(filter, {$set: newObject}, option);
+        res.send({status: 200, message: 'Successfully Update Labels Information', data: result});
+
+    } catch (error) {
+        next(error)
+    }
+}
+
 // Get Labels data under the Master User by Status_________________________________
 module.exports.userLabelsList = async (req, res, next) => {
     try {

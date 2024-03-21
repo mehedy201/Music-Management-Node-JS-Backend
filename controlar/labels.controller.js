@@ -107,7 +107,7 @@ module.exports.lablesActionRequired = async (req, res, next) => {
         const masterUserId = req.params.masterUserId;
         const findLablesByMasterId = await db.collection('labels').find({ masterUserId: masterUserId }).toArray();
         // Filter objects that have the actionRequired key
-        const filteredData = findLablesByMasterId.filter(item => item.actionRequird);
+        const filteredData = findLablesByMasterId.filter(item => item.actionRequired);
         res.send({status: 200, message: 'Successfully Get Action Required Labels Data', data: filteredData});
     } catch (error) {
         next(error)

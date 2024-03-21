@@ -15,10 +15,10 @@ router.get('/search/:masterUserId', labelsController.userLabelsSearch);
 // Get All Approved Label for Create release _________________________________
 router.get('/for-release/:masterUserId', labelsController.userLabelsListForCreateRelease);
 
-// Get All Approved Label for Create release _________________________________
+// Get All Action Required Label for Create release __________________________
 router.get('/action-required/:masterUserId', labelsController.lablesActionRequired);
 
-// Crate Labels inside Specific Muster Usere______________________________________
+// Upload Labels image______________________________________
 router.post('/upload-labels-img', uploadLabelImage.single('file'), labelsController.uploadLabelsImg);
 
 // Crate Labels in Specific Muster Usere______________________________________

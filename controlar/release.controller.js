@@ -139,6 +139,20 @@ module.exports.deleteReleaseDataAndImage = async (req, res, next) => {
     }
 }
 
+// Release Data only Action Required _____________________________________________________________________________________
+module.exports.releaseActionRequired = async (req, res, next) => {
+    try {
+        const db = getDb();
+        const masterUserId = req.params.masterUserId;
+        const findReleaseByMasterId = await db.collection('release').find({ masterUserId: masterUserId }).toArray();
+        // Filter objects that have the actionRequired key
+        const filteredData = findReleaseByMasterId.filter(item => item.actionRequired);
+        res.send({status: 200, message: 'Successfully Get Action Required Release Data', data: filteredData});
+    } catch (error) {
+        next(error)
+    }
+}
+
 // _____________________________________________________________________________________________________________________
 // Get Release data under the Artist By Status__________________________________________________________________________
 module.exports.artistReleasesList = async (req, res, next) => {

@@ -18,6 +18,8 @@ router.delete('/delete-release/:id', releaseController.deleteReleaseDataAndImage
 router.get('/:masterUserId', releaseController.userReleasesList);
 // Get All Release Data Using Search from Client Side_______________________________
 router.get('/search/:masterUserId', releaseController.userReleaseSearch);
+// Get All Action Required Release__________________________________________________
+router.get('/action-required/:masterUserId', releaseController.releaseActionRequired);
 // _________________________________________________________________________________
 // Get Release data in Specific Artist by status____________________________________
 router.get('/artist/:id', releaseController.artistReleasesList);

@@ -46,6 +46,7 @@ module.exports.updateRelease = async (req, res, next) => {
         const filter = { _id: new ObjectId(id)};
         const option = {upsert: true};
         const newObject = req.body;
+        delete newObject._id
         const result = await db.collection('release').updateOne(filter, {$set: newObject}, option);
         res.send({status: 200, message: 'Successfully Update Release Data', data: result});
 

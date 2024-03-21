@@ -15,15 +15,18 @@ router.get('/search/:masterUserId', labelsController.userLabelsSearch);
 // Get All Approved Label for Create release _________________________________
 router.get('/for-release/:masterUserId', labelsController.userLabelsListForCreateRelease);
 
-// Crate Artist inside Specific Muster Usere______________________________________
+// Get All Approved Label for Create release _________________________________
+router.get('/action-required/:masterUserId', labelsController.lablesActionRequired);
+
+// Crate Labels inside Specific Muster Usere______________________________________
 router.post('/upload-labels-img', uploadLabelImage.single('file'), labelsController.uploadLabelsImg);
 
-// Crate Artist in Specific Muster Usere______________________________________
+// Crate Labels in Specific Muster Usere______________________________________
 router.post('/create-labels', labelsController.userCreateNewLabels);
 // UPDATE Label informations__________________________________________________
 router.put('/update-labels/:id', labelsController.updateLabels);
 
-// Delete Artist Data and Labels Image_______________________________________
+// Delete Labels Data and Labels Image_______________________________________
 router.delete('/delete-labels/:id', labelsController.deleteLabelsDataAndImage);
 
 module.exports = router;

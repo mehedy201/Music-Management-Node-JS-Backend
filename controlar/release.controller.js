@@ -119,6 +119,25 @@ module.exports.singleReleaseData = async (req, res, next) => {
     }
 }
 
+// Delete Release with Image_____________________________________________
+module.exports.deleteReleaseDataAndImage = async (req, res, next) => {
+    try {
+        // Delete Artist Img from AWS S3 ________________
+        const imgKey = req.query.imgKey
+        const deleteImg = await deleteAwsStorageFile(imgKey);
+        const audioKey = req.query.audioKey;
+        const deleteAudio = await deleteAwsStorageFile(audioKey);
+        //Delete Artist Data from MongoDB________________
+        const db = getDb();
+        const id = req.params.id;
+        const query = {_id: new ObjectId(id) };
+        const singleData = await db.collection('release').deleteOne(query);
+        res.json({ status: 200, message: 'Deleted Release'});
+    } catch (error) {
+        next(error)
+    }
+}
+
 // _____________________________________________________________________________________________________________________
 // Get Release data under the Artist By Status__________________________________________________________________________
 module.exports.artistReleasesList = async (req, res, next) => {

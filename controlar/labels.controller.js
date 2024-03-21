@@ -100,6 +100,22 @@ module.exports.singleLabelsData = async (req, res, next) => {
     }
 }
 
+// Labels Data only Action Required _____________________________________________________________________________________
+module.exports.lablesActionRequired = async (req, res, next) => {
+    try {
+        const db = getDb();
+        const masterUserId = req.params.masterUserId;
+        const findLablesByMasterId = await db.collection('labels').find({ masterUserId: masterUserId }).toArray();
+        // Filter objects that have the actionRequired key
+        const filteredData = findLablesByMasterId.filter(item => item.actionRequird);
+        res.send({status: 200, message: 'Successfully Get Action Required Labels Data', data: filteredData});
+    } catch (error) {
+        next(error)
+    }
+}
+
+
+
 // Search Labels data under the Master User_________________________________
 module.exports.userLabelsListForCreateRelease = async (req, res, next) => {
     try {

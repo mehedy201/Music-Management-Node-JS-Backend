@@ -95,13 +95,17 @@ module.exports.userReleaseSearch = async (req, res, next) => {
         const findReleaseByMasterId = await db.collection('release').find({ masterUserId: masterUserId }).toArray();
         // Filter Release data by Status _______
         const status = req.query.status;
-        const findByStatus = findReleaseByMasterId.filter(d =>d.status.toLowerCase().includes(status.toLowerCase()));
-        // Filter Release by Release Title_________
         const searchText = req.query.search;
-        const findByTitle = findByStatus.filter(d =>d.releaseTitle.toLowerCase().includes(searchText.toLowerCase()))
-        const data = findByTitle.reverse();
+        let data;
+        if(status === 'All'){
+            const findByTitle = findReleaseByMasterId.filter(d =>d.releaseTitle.toLowerCase().includes(searchText.toLowerCase()));
+            data = findByTitle.reverse();
+        }else{
+            const findByStatus = findReleaseByMasterId.filter(d =>d.status.toLowerCase().includes(status.toLowerCase()));
+            const findByTitle = findByStatus.filter(d =>d.releaseTitle.toLowerCase().includes(searchText.toLowerCase()));
+            data = findByTitle.reverse();
+        }
         const dataCount = data.length;
-
         res.send({status: 200, message: 'Successfully Get Release List by Search', data: data, dataCount: dataCount});
     } catch (error) {
         next(error)

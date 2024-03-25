@@ -6,8 +6,6 @@ const router = express.Router();
 
 // Create a new user using Email______________________________
 router.post('/', usersController.createNewUser);
-// Get All user Data__________________________________________
-router.get('/', usersController.getAllUsers);
 // Get single User Data_______________________________________
 router.get('/:id', usersController.getSingleUser);
 // Update Single User Data____________________________________

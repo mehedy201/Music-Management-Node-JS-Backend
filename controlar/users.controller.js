@@ -1,19 +1,6 @@
 const { ObjectId } = require("mongodb");
 const { getDb } = require("../utilities/dbConnect");
 
-// Get All User Data
-module.exports.getAllUsers = async (req, res, next) => {
-    try {
-        const query ={};
-        const db = getDb();
-        const cursor = await db.collection('users').find(query);
-        const users = await cursor.toArray();
-        const organizeData = users.reverse();
-        res.send({status: 200, message: 'Successfully Get All USERS', data: organizeData});
-    } catch (error) {
-        next(error)
-    }
-}
 
 // Get Single User Data using Id
 module.exports.getSingleUser = async (req, res, next) => {
@@ -49,6 +36,9 @@ module.exports.updateUser = async (req, res, next) => {
         const filter = { _id: new ObjectId(id)};
         const option = {upsert: true};
         const newObject = req.body;
+        if(newObject._id){
+            delete newObject._id
+        }
         const result = await db.collection('users').updateOne(filter, {$set: newObject}, option);
         res.send({status: 200, message: 'Successfully Get Single USERS Data', data: result});
 

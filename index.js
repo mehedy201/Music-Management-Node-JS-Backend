@@ -31,6 +31,7 @@ const userRoutes = require('./routes/v1/users.route');
 const releaseRoutes = require('./routes/v1/release.route');
 const artistRoutes = require('./routes/v1/artist.route');
 const labelsRoutes = require('./routes/v1/labels.route');
+const bankInformationRoutes = require('./routes/v1/bankDetails.route');
 
 // Common_____________________________________________________________________________
 const sendPayments = require('./routes/v1/AdminUserBothRoute/sendPaymentFromDreamRecord.route');
@@ -44,6 +45,7 @@ app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/release', releaseRoutes);
 app.use('/api/v1/artist', artistRoutes);
 app.use('/api/v1/labels', labelsRoutes);
+app.use('/api/v1/bank-info', bankInformationRoutes);
 
 // ADMIN API________________________________________________/////
 app.use('/admin/api/v1/users', adminUsersListRoute);

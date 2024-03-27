@@ -50,3 +50,19 @@ module.exports.searchPaymentDetailsByYear = async (req, res, next) => {
         next(error)
     }
 }
+
+
+// __________________________________________________________________________________________________________________
+// __________________________________________________________________________________________________________________
+// Stored Withdrawal Details___________________________________________________
+module.exports.storedWithdrawalDetails = async (req, res, next) => {
+    try {
+        const db = getDb();
+        const withdrawalDetails = req.body;
+        delete withdrawalDetails._id;
+        const result = await db.collection('stored-withdrawal-details').insertOne(withdrawalDetails);
+        res.send({status: 200, message: 'Successfully Stored Withdrawal Information', data: result});
+    } catch (error) {
+        next(error)
+    }
+}

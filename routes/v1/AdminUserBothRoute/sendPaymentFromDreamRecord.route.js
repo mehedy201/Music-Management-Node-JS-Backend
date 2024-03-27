@@ -7,4 +7,8 @@ router.post('/', sendPaymentFromDreamRecord.storedPaymentDetails);
 router.get('/:id', sendPaymentFromDreamRecord.getPaymentDetails);
 router.get('/search/:id', sendPaymentFromDreamRecord.searchPaymentDetailsByYear);
 
+router.post('/withdrawal/', sendPaymentFromDreamRecord.storedWithdrawalDetails);
+
+
+
 module.exports = router;

@@ -130,6 +130,46 @@ module.exports.getSingleWithdrawalDetailsBySearch = async (req, res, next) => {
     }
 }
 
+// Single Withdrawal Data _____________________________________________________________________________________
+module.exports.singleWithdrawalData = async (req, res, next) => {
+    try {
+        const db = getDb();
+        const id = req.params.id;
+        const findSingleWithdrawalData = await db.collection('stored-withdrawal-details').find({_id: new ObjectId(id) }).toArray();
+        res.send({status: 200, message: 'Successfully Get withdrawal Data', data: findSingleWithdrawalData});
+    } catch (error) {
+        next(error)
+    }
+}
+
+module.exports.updateWithdrawalStatus = async (req, res, next) => {
+    try {
+        const db = getDb();
+        const id = req.params.id;
+        const filter = { _id: new ObjectId(id)};
+        const option = {upsert: true};
+        const newObject = req.body;
+        delete newObject._id;
+        const result = await db.collection('stored-withdrawal-details').updateOne(filter, {$set: newObject}, option);
+        res.send({status: 200, message: 'Successfully Update Withdrawal Status', data: result});
+
+    } catch (error) {
+        next(error)
+    }
+}
+
+module.exports.withdrawalDataDeleted = async (req, res, next) => {
+    try {
+        const db = getDb();
+        const id = req.params.id;
+        const query = {_id: new ObjectId(id) };
+        const singleData = await db.collection('stored-withdrawal-details').deleteOne(query);
+        res.json({ status: 200, message: 'Deleted withdrawal Data'});
+    } catch (error) {
+        next(error)
+    }
+}
+
 
 // Only For Admin API  End_____________________________________________________________________________
 // ____________________________________________________________________________________________________
